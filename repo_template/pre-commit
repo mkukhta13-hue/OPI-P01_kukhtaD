@@ -1,0 +1,8 @@
+#!/bin/sh
+# Забороняє прямі коміти в main (злиття через pull request дозволені)
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+if [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then exit 0; fi
+if [ "$branch" = "main" ]; then
+  echo "Прямі коміти в main заборонені: створіть гілку і pull request" >&2
+  exit 1
+fi
